@@ -9,6 +9,12 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
+        /* HIGHLIGHT NEW CHANGES */
+        .highlight-change {
+            background-color: #fef08a;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
@@ -426,6 +432,7 @@
         function generateFinalURL() {
             const landingPage = document.getElementById('landingPage').value;
             const medium = document.getElementById('medium').value;
+            const purpose = document.getElementById('utmPurpose').value;
             
             let source = '';
             if (document.getElementById('sourceTextbox').style.display !== 'none') {
@@ -444,15 +451,20 @@
             const content = document.getElementById('contentName').value;
             const marketingTag = document.getElementById('marketingTag').value;
 
+            // For Business Profiles, campaign is optional; for others, it's required
             const isBusinessProfiles = purpose === 'Business Profiles';
-
+            
             if (!landingPage || (!isBusinessProfiles && !campaignName)) {
                 document.getElementById('finalURL').value = '';
                 return;
             }
 
             const separator = landingPage.includes('?') ? '&' : '?';
-            let url = `${landingPage}${separator}utm_source=${source}&utm_medium=${medium}&utm_campaign=${campaignName}`;
+            let url = `${landingPage}${separator}utm_source=${source}&utm_medium=${medium}`;
+
+            if (campaignName) {
+                url += `&utm_campaign=${campaignName}`;
+            }
 
             if (content) {
                 url += `&utm_content=${content}`;
