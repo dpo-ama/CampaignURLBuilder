@@ -444,7 +444,9 @@
             const content = document.getElementById('contentName').value;
             const marketingTag = document.getElementById('marketingTag').value;
 
-            if (!landingPage || !campaignName) {
+            const isBusinessProfiles = purpose === 'Business Profiles';
+
+            if (!landingPage || (!isBusinessProfiles && !campaignName)) {
                 document.getElementById('finalURL').value = '';
                 return;
             }
