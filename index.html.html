@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign URL Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Campaign URL Builder</h1>
+            <button onclick="clearForm()" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-semibold">
+                Clear All
+            </button>
+        </div>
+        
+        <div class="space-y-4">
+            <!-- What is the UTMs for? -->
+            <div class="flex items-center gap-4">
+                <label class="w-48 font-semibold text-gray-700">What are the UTMs for?</label>
+                <select id="utmPurpose" onchange="handleUtmPurposeChange()" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">Select Purpose</option>
+                    <option value="PPC">PPC</option>
+                    <option value="Email">Email</option>
+                    <option value="Organic Social">Organic Social</option>
+                    <option value="Mobile App - Apptile">Mobile App - Apptile</option>
+                    <option value="Vanity URL">Vanity URL</option>
+                    <option value="Offline">Offline</option>
+                    <option value="QR Code">QR Code</option>
+                    <option value="Organic Business Profile">Organic Business Profile</option>
+                    <option value="Survey">Survey</option>
+                    <option value="Affiliate/Paid Referral">Affiliate/Paid Referral</option>
+                    <option value="Internal">Internal</option>
+                </select>
+            </div>
+
+            <!-- Vanity field -->
+            <div id="vanityField" class="flex items-center gap-4" style="display: none;">
+                <label class="w-48 font-semibold text-gray-700">Vanity</label>
+                <input type="text" id="vanity" oninput="handleVanityChange()" placeholder="Enter vanity name" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Landing Page -->
+            <div class="flex items-center gap-4">
+                <label class="w-48 font-semibold text-gray-700">Landing Page</label>
+                <input type="text" id="landingPage" oninput="generateFinalURL()" placeholder="https://ama.ab.ca/page" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Medium -->
+            <div class="flex items-center gap-4">
+                <label class="w-48 font-semibold text-gray-700">Medium</label>
+                <select id="medium" onchange="handleMediumChange()" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">Select Medium</option>
+                </select>
+            </div>
+
+            <!-- Source -->
+            <div class="flex items-center gap-4">
+                <label class="w-48 font-semibold text-gray-700">Source</label>
+                <input type="text" id="sourceTextbox" oninput="generateFinalURL()" placeholder="Enter source name" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent" style="display: none;">
+                <select id="sourceDropdown" onchange="generateFinalURL()" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">Select Source</option>
+                </select>
+            </div>
+
+            <!-- UTM Campaign Components (PPC Only) -->
+            <div id="ppcSection" class="border-2 border-purple-200 rounded-lg p-6 bg-purple-50" style="display: none;">
+                <h2 class="text-xl font-bold text-purple-800 mb-4">UTM Campaign Components</h2>
+                <div class="space-y-4">
+                    <!-- Business Unit -->
+                    <div class="flex items-center gap-4">
+                        <label class="w-48 font-semibold text-gray-700">Business Unit</label>
+                        <select id="businessUnit" onchange="generateCampaignName()" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <option value="">Select Business Unit</option>
+                        </select>
+                    </div>
+
+                    <!-- Product Name -->
+                    <div class="flex items-center gap-4">
+                        <label class="w-48 font-semibold text-gray-700">Product Name</label>
+                        <input type="text" id="productName" oninput="generateCampaignName()" placeholder="e.g., vrar, twhd, acq, hotel, tmi" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+
+                    <!-- Platform -->
+                    <div class="flex items-center gap-4">
+                        <label class="w-48 font-semibold text-gray-700">Platform</label>
+                        <select id="platform" onchange="handlePlatformChange()" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <option value="">Select Platform</option>
+                        </select>
+                    </div>
+
+                    <!-- Campaign Type -->
+                    <div class="flex items-center gap-4">
+                        <label class="w-48 font-semibold text-gray-700">Campaign Type</label>
+                        <select id="campaignType" onchange="generateCampaignName()" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <option value="">Select Type</option>
+                        </select>
+                    </div>
+
+                    <!-- Targeting -->
+                    <div class="flex items-center gap-4">
+                        <label class="w-48 font-semibold text-gray-700">Targeting</label>
+                        <input type="text" id="targeting" oninput="generateCampaignName()" placeholder="e.g., generic, demo, interest, lookalike" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+
+                    <!-- Campaign Name (Auto-generated) -->
+                    <div class="flex items-center gap-4 mt-4">
+                        <label class="w-48 font-semibold text-gray-700">Campaign</label>
+                        <input type="text" id="campaignNamePPC" readonly class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded bg-gray-50">
+                        <button onclick="copyCampaignName()" class="px-4 py-2 h-10 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 whitespace-nowrap">
+                            <span id="copyIcon">📋</span>
+                            <span id="copyText">Copy</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Campaign Name (Non-PPC) -->
+            <div id="manualCampaignSection" class="flex items-center gap-4">
+                <label class="w-48 font-semibold text-gray-700">Campaign</label>
+                <input type="text" id="manualCampaignName" oninput="generateFinalURL()" placeholder="utm_campaign=bu_campaignname" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Content Name -->
+            <div class="flex items-center gap-4">
+                <label class="w-48 font-semibold text-gray-700">Content</label>
+                <input type="text" id="contentName" oninput="generateFinalURL()" placeholder="(optional) utm_content=creativesize, cta button" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Marketing Tag -->
+            <div class="flex items-center gap-4">
+                <label class="w-48 font-semibold text-gray-700">Marketing Tag</label>
+                <input type="text" id="marketingTag" oninput="generateFinalURL()" placeholder="bu_campaignname" class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Final URL -->
+            <div class="flex items-start gap-4 bg-green-50 p-4 rounded">
+                <label class="w-48 font-semibold text-gray-700 pt-2">Final URL</label>
+                <textarea id="finalURL" readonly rows="3" class="flex-1 px-3 py-2 border border-gray-300 rounded bg-gray-50 resize-none"></textarea>
+                <button onclick="copyFinalURL()" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-2 whitespace-nowrap">
+                    <span id="copyURLIcon">📋</span>
+                    <span id="copyURLText">Copy</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data structures
+        const mediumSourceMap = {
+            affiliate: 'textbox',
+            cpc: ['bing', 'disney', 'facebook', 'google', 'instagram', 'linkedin', 'netflix', 'reddit', 'snapchat', 'spotify', 'tiktok', 'twn', 'x', 'yahoo', 'quantcast'],
+            cpm: ['dbm', 'amz'],
+            direct_mail: ['vanity'],
+            email: ['broadcast', 'experience', 'transactional', 'zeta'],
+            sms: ['broadcast', 'experience', 'transactional', 'zeta'],
+            push: ['broadcast', 'experience', 'transactional', 'zeta'],
+            internal: 'textbox',
+            multi: ['vanity'],
+            organic: ['bing', 'google', 'gmb-listing', 'gmb-post'],
+            paid_referral: 'textbox',
+            print: ['vanity'],
+            referral: ['apptile'],
+            social: ['facebook', 'instagram', 'linkedin', 'reddit', 'snapchat', 'spotify', 'tiktok', 'x'],
+            survey: 'textbox',
+            offline: 'textbox',
+            digital_display: ['vanity']
+        };
+
+        const businessUnitOptions = [
+            { value: 'ama', label: 'ama (Multiple Business Units)' },
+            { value: 'bnk', label: 'bnk (Banking / Bridgewater Bank)' },
+            { value: 'com', label: 'com (Corporate Purpose / Member Experience / Corp Com)' },
+            { value: 'ctc', label: 'ctc (Contact Centre)' },
+            { value: 'ded', label: 'ded (Driver Education)' },
+            { value: 'ent', label: 'ent (Enterprise Support)' },
+            { value: 'fin', label: 'fin (Finance)' },
+            { value: 'gov', label: 'gov (Government & Stakeholder Relations)' },
+            { value: 'hrd', label: 'hrd (Human Resources / Recruitment)' },
+            { value: 'ins', label: 'ins (Insurance)' },
+            { value: 'isd', label: 'isd (Information Services)' },
+            { value: 'mem', label: 'mem (Membership)' },
+            { value: 'mkt', label: 'mkt (Marketing)' },
+            { value: 'reg', label: 'reg (Registries)' },
+            { value: 'rew', label: 'rew (Rewards)' },
+            { value: 'rsa', label: 'rsa (Roadside Assistance)' },
+            { value: 'trv', label: 'trv (Travel)' },
+            { value: 'auto', label: 'auto (Automotive)' }
+        ];
+
+        const platformCampaignMap = {
+            asa: ['app', 's'],
+            b: ['app', 'ds', 's', 'sh', 'v', 'ds_v'],
+            dv: ['a', 'ds', 'v', 'yt', 'ds_v'],
+            fb: ['ps'],
+            go: ['app', 'dg', 'ds', 'pmax', 'rlsa', 's', 'sh', 'sm', 'v', 'yt', 'ds_v'],
+            ig: ['ps'],
+            amz: ['ds', 'v', 'ds_v'],
+            ln: ['ps'],
+            pn: ['ps'],
+            q: ['ds', 'ds_v'],
+            rd: ['ps'],
+            sn: ['ps'],
+            sp: ['ps'],
+            tk: ['ps'],
+            twn: ['ds', 'ds_v'],
+            x: ['ps'],
+            y: ['s', 'ds']
+        };
+
+        const platformOptions = [
+            { value: 'asa', label: 'asa (Apple Search Ads)' },
+            { value: 'b', label: 'b (Bing)' },
+            { value: 'dv', label: 'dv (DV360)' },
+            { value: 'fb', label: 'fb (Facebook)' },
+            { value: 'go', label: 'go (Google)' },
+            { value: 'ig', label: 'ig (Instagram)' },
+            { value: 'ln', label: 'ln (LinkedIn)' },
+            { value: 'pn', label: 'pn (Pinterest)' },
+            { value: 'q', label: 'q (Quantcast)' },
+            { value: 'rd', label: 'rd (Reddit)' },
+            { value: 'sn', label: 'sn (Snapchat)' },
+            { value: 'sp', label: 'sp (Spotify)' },
+            { value: 'tk', label: 'tk (TikTok)' },
+            { value: 'twn', label: 'twn (The Weather Network)' },
+            { value: 'x', label: 'x (X)' },
+            { value: 'y', label: 'y (Yahoo)' }
+        ];
+
+        const campaignTypeLabels = {
+            'app': 'app (App Download)',
+            'dg': 'dg (Demand Gen)',
+            'ds': 'ds (Display)',
+            'pmax': 'pmax (Performance Max)',
+            'ps': 'ps (Paid Social)',
+            'rlsa': 'rlsa (Remarketing Lists for Search Ads)',
+            's': 's (Search)',
+            'sm': 'sm (Smart)',
+            'sh': 'sh (Shopping)',
+            'v': 'v (Video)',
+            'yt': 'yt (YouTube)',
+            'a': 'a (Audio)',
+            'dis': 'dis (Discovery)',
+            'ds_v': 'ds_v (Display and Video)'
+        };
+
+        const utmPurposeMediumMap = {
+            'PPC': ['cpc', 'cpm'],
+            'Email': ['email', 'sms', 'push'],
+            'Organic Social': ['social'],
+            'Mobile App - Apptile': ['referral'],
+            'Vanity URL': ['multi', 'print', 'direct_mail'],
+            'Organic Business Profile': ['organic'],
+            'QR Code': ['multi', 'print', 'direct_mail'],
+            'Offline': ['offline'],
+            'Affiliate/Paid Referral': ['affiliate', 'paid_referral'],
+            'Internal': ['internal'],
+            'Survey': ['survey']
+        };
+
+        // Initialize dropdowns
+        function initializeDropdowns() {
+            const buSelect = document.getElementById('businessUnit');
+            businessUnitOptions.forEach(bu => {
+                const option = document.createElement('option');
+                option.value = bu.value;
+                option.textContent = bu.label;
+                buSelect.appendChild(option);
+            });
+
+            const platformSelect = document.getElementById('platform');
+            platformOptions.forEach(platform => {
+                const option = document.createElement('option');
+                option.value = platform.value;
+                option.textContent = platform.label;
+                platformSelect.appendChild(option);
+            });
+        }
+
+        function handleUtmPurposeChange() {
+            const purpose = document.getElementById('utmPurpose').value;
+            const isPPC = purpose === 'PPC';
+            const isVanity = purpose === 'Vanity URL';
+            const isQRCode = purpose === 'QR Code';
+
+            // Show/hide sections
+            document.getElementById('ppcSection').style.display = isPPC ? 'block' : 'none';
+            document.getElementById('manualCampaignSection').style.display = isPPC ? 'none' : 'flex';
+            document.getElementById('vanityField').style.display = isVanity ? 'flex' : 'none';
+
+            // Populate medium dropdown
+            const mediumSelect = document.getElementById('medium');
+            mediumSelect.innerHTML = '<option value="">Select Medium</option>';
+            
+            if (purpose && utmPurposeMediumMap[purpose]) {
+                utmPurposeMediumMap[purpose].forEach(medium => {
+                    const option = document.createElement('option');
+                    option.value = medium;
+                    option.textContent = medium;
+                    mediumSelect.appendChild(option);
+                });
+            }
+
+            // Reset fields
+            document.getElementById('medium').value = '';
+            document.getElementById('sourceTextbox').value = '';
+            document.getElementById('sourceDropdown').value = '';
+            document.getElementById('vanity').value = '';
+            document.getElementById('manualCampaignName').value = '';
+            
+            // Set content based on purpose
+            if (isQRCode) {
+                document.getElementById('contentName').value = 'qr_code';
+                document.getElementById('contentName').readOnly = true;
+                document.getElementById('contentName').classList.add('bg-gray-50');
+            } else {
+                document.getElementById('contentName').value = '';
+                document.getElementById('contentName').readOnly = false;
+                document.getElementById('contentName').classList.remove('bg-gray-50');
+            }
+
+            handleMediumChange();
+        }
+
+        function handleMediumChange() {
+            const medium = document.getElementById('medium').value;
+            const purpose = document.getElementById('utmPurpose').value;
+            const sourceConfig = mediumSourceMap[medium];
+            
+            const textbox = document.getElementById('sourceTextbox');
+            const dropdown = document.getElementById('sourceDropdown');
+
+            // Special handling for QR Code - always use textbox
+            if (purpose === 'QR Code') {
+                textbox.style.display = 'block';
+                dropdown.style.display = 'none';
+                textbox.value = '';
+            }
+            // Special handling for Vanity URL - always use vanity
+            else if (purpose === 'Vanity URL') {
+                textbox.style.display = 'none';
+                dropdown.style.display = 'block';
+                dropdown.innerHTML = '<option value="">Select Source</option>';
+                const option = document.createElement('option');
+                option.value = 'vanity';
+                option.textContent = 'vanity';
+                dropdown.appendChild(option);
+                dropdown.value = '';
+            }
+            else if (sourceConfig === 'textbox') {
+                textbox.style.display = 'block';
+                dropdown.style.display = 'none';
+                textbox.value = '';
+            } else if (Array.isArray(sourceConfig)) {
+                textbox.style.display = 'none';
+                dropdown.style.display = 'block';
+                dropdown.innerHTML = '<option value="">Select Source</option>';
+                sourceConfig.forEach(source => {
+                    const option = document.createElement('option');
+                    option.value = source;
+                    option.textContent = source;
+                    dropdown.appendChild(option);
+                });
+                dropdown.value = '';
+            } else {
+                textbox.style.display = 'none';
+                dropdown.style.display = 'block';
+                dropdown.innerHTML = '<option value="">Select Source</option>';
+            }
+
+            generateFinalURL();
+        }
+
+        function handlePlatformChange() {
+            const platform = document.getElementById('platform').value;
+            const campaignTypeSelect = document.getElementById('campaignType');
+            
+            campaignTypeSelect.innerHTML = '<option value="">Select Type</option>';
+            
+            if (platform && platformCampaignMap[platform]) {
+                platformCampaignMap[platform].forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = campaignTypeLabels[type] || type;
+                    campaignTypeSelect.appendChild(option);
+                });
+            }
+
+            generateCampaignName();
+        }
+
+        function handleVanityChange() {
+            const vanity = document.getElementById('vanity').value;
+            if (vanity) {
+                document.getElementById('contentName').value = `redirect_${vanity}`;
+                document.getElementById('contentName').readOnly = true;
+                document.getElementById('contentName').classList.add('bg-gray-50');
+            } else {
+                document.getElementById('contentName').value = '';
+                document.getElementById('contentName').readOnly = false;
+                document.getElementById('contentName').classList.remove('bg-gray-50');
+            }
+            generateFinalURL();
+        }
+
+        function generateCampaignName() {
+            const bu = document.getElementById('businessUnit').value;
+            const product = document.getElementById('productName').value;
+            const platform = document.getElementById('platform').value;
+            const campaignType = document.getElementById('campaignType').value;
+            const targeting = document.getElementById('targeting').value;
+
+            const parts = [bu, product, platform, campaignType, targeting].filter(p => p);
+            const campaignName = parts.join('_');
+            
+            document.getElementById('campaignNamePPC').value = campaignName;
+            generateFinalURL();
+        }
+
+        function generateFinalURL() {
+            const landingPage = document.getElementById('landingPage').value;
+            const medium = document.getElementById('medium').value;
+            
+            let source = '';
+            if (document.getElementById('sourceTextbox').style.display !== 'none') {
+                source = document.getElementById('sourceTextbox').value;
+            } else {
+                source = document.getElementById('sourceDropdown').value;
+            }
+
+            let campaignName = '';
+            if (document.getElementById('ppcSection').style.display !== 'none') {
+                campaignName = document.getElementById('campaignNamePPC').value;
+            } else {
+                campaignName = document.getElementById('manualCampaignName').value;
+            }
+
+            const content = document.getElementById('contentName').value;
+            const marketingTag = document.getElementById('marketingTag').value;
+
+            if (!landingPage || !campaignName) {
+                document.getElementById('finalURL').value = '';
+                return;
+            }
+
+            const separator = landingPage.includes('?') ? '&' : '?';
+            let url = `${landingPage}${separator}utm_source=${source}&utm_medium=${medium}&utm_campaign=${campaignName}`;
+
+            if (content) {
+                url += `&utm_content=${content}`;
+            }
+
+            if (marketingTag) {
+                url += `&marketingtag=${marketingTag}`;
+            }
+
+            document.getElementById('finalURL').value = url;
+        }
+
+        function copyCampaignName() {
+            const campaignName = document.getElementById('campaignNamePPC').value;
+            navigator.clipboard.writeText(campaignName).then(() => {
+                document.getElementById('copyIcon').textContent = '✓';
+                document.getElementById('copyText').textContent = 'Copied!';
+                setTimeout(() => {
+                    document.getElementById('copyIcon').textContent = '📋';
+                    document.getElementById('copyText').textContent = 'Copy';
+                }, 2000);
+            });
+        }
+
+        function copyFinalURL() {
+            const finalURL = document.getElementById('finalURL').value;
+            navigator.clipboard.writeText(finalURL).then(() => {
+                document.getElementById('copyURLIcon').textContent = '✓';
+                document.getElementById('copyURLText').textContent = 'Copied!';
+                setTimeout(() => {
+                    document.getElementById('copyURLIcon').textContent = '📋';
+                    document.getElementById('copyURLText').textContent = 'Copy';
+                }, 2000);
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('utmPurpose').value = '';
+            document.getElementById('vanity').value = '';
+            document.getElementById('landingPage').value = '';
+            document.getElementById('medium').value = '';
+            document.getElementById('sourceTextbox').value = '';
+            document.getElementById('sourceDropdown').value = '';
+            document.getElementById('businessUnit').value = '';
+            document.getElementById('productName').value = '';
+            document.getElementById('platform').value = '';
+            document.getElementById('campaignType').value = '';
+            document.getElementById('targeting').value = '';
+            document.getElementById('campaignNamePPC').value = '';
+            document.getElementById('manualCampaignName').value = '';
+            document.getElementById('contentName').value = '';
+            document.getElementById('marketingTag').value = '';
+            document.getElementById('finalURL').value = '';
+
+            document.getElementById('ppcSection').style.display = 'none';
+            document.getElementById('manualCampaignSection').style.display = 'flex';
+            document.getElementById('vanityField').style.display = 'none';
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            initializeDropdowns();
+        };
+    </script>
+</body>
+</html>
