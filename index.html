@@ -136,7 +136,7 @@
               >
               <select
                 id="businessUnit"
-                onchange="generateCampaignName()"
+                onchange="generateCampaignFields()"
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="">Select Business Unit</option>
@@ -151,7 +151,7 @@
               <input
                 type="text"
                 id="productName"
-                oninput="generateCampaignName()"
+                oninput="generateCampaignFields()"
                 placeholder="e.g., vrar, twhd, acq, hotel, tmi"
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
@@ -176,7 +176,7 @@
               >
               <select
                 id="campaignType"
-                onchange="generateCampaignName()"
+                onchange="generateCampaignFields()"
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="">Select Type</option>
@@ -189,7 +189,7 @@
               <input
                 type="text"
                 id="targeting"
-                oninput="generateCampaignName()"
+                oninput="generateCampaignFields()"
                 placeholder="e.g., generic, demo, interest, lookalike"
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
@@ -201,12 +201,12 @@
               style="display: none"
             >
               <label class="w-48 font-semibold text-gray-700">
-                Insertion Order Type <span class="text-red-600">*</span>
+                Insertion Order Type
               </label>
 
               <select
                 id="dvInsertionOrder"
-                onchange="generateCampaignName()"
+                onchange="generateCampaignFields()"
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
               >
                 <option value="">Select Type</option>
@@ -227,11 +227,29 @@
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded bg-gray-50"
               />
               <button
-                onclick="copyCampaignName()"
+                onclick="copyToClipboard('campaignNamePPC', 'copyIcon', 'copyText')"
                 class="px-4 py-2 h-10 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 whitespace-nowrap"
               >
                 <span id="copyIcon">📋</span>
                 <span id="copyText">Copy</span>
+              </button>
+            </div>
+
+            <!-- Insertion Order Name Display Box (DV360 Only) -->
+            <div id="ioDisplaySection" class="flex items-center gap-4 mt-4" style="display: none">
+              <label class="w-48 font-semibold text-gray-700">Insertion Order</label>
+              <input
+                type="text"
+                id="ioNameDisplay"
+                readonly
+                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded bg-gray-50"
+              />
+              <button
+                onclick="copyToClipboard('ioNameDisplay', 'copyIOIcon', 'copyIOText')"
+                class="px-4 py-2 h-10 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 whitespace-nowrap"
+              >
+                <span id="copyIOIcon">📋</span>
+                <span id="copyIOText">Copy</span>
               </button>
             </div>
           </div>
@@ -574,6 +592,7 @@
         const campaignTypeSelect = document.getElementById("campaignType");
         const targeting = document.getElementById("targeting");
         const dvSection = document.getElementById("dvInsertionOrderSection");
+        const ioDisplaySection = document.getElementById("ioDisplaySection");
 
         campaignTypeSelect.innerHTML = '<option value="">Select Type</option>';
 
@@ -587,8 +606,9 @@
         }
 
         if (platform === "dv") {
-          // Show IO selector
+          // Show IO setup fields
           dvSection.style.display = "flex";
+          ioDisplaySection.style.display = "flex";
 
           // Clear selection and forcefully inject/select programmatic
           campaignTypeSelect.innerHTML = '<option value="programmatic" selected>programmatic (Programmatic)</option>';
@@ -599,12 +619,19 @@
           targeting.readOnly = true;
         } else {
           dvSection.style.display = "none";
+          ioDisplaySection.style.display = "none";
           campaignTypeSelect.disabled = false;
           targeting.readOnly = false;
           targeting.value = "";
+          document.getElementById("dvInsertionOrder").value = "";
+          document.getElementById("ioNameDisplay").value = "";
         }
 
-        generateCampaignName();
+        handlePlatformChangeCustomRules();
+      }
+
+      function handlePlatformChangeCustomRules() {
+        generateCampaignFields();
       }
 
       function handleVanityChange() {
@@ -621,27 +648,28 @@
         generateFinalURL();
       }
 
-      function generateCampaignName() {
+      function generateCampaignFields() {
         const bu = document.getElementById("businessUnit").value;
         const product = document.getElementById("productName").value;
         const platform = document.getElementById("platform").value;
         const campaignType = document.getElementById("campaignType").value;
         const targeting = document.getElementById("targeting").value;
         const ioType = document.getElementById("dvInsertionOrder").value;
-        const parts = [bu, product, platform, campaignType, targeting];
 
+        // 1. Build Campaign String (No longer appended with ioType)
+        const campaignParts = [bu, product, platform, campaignType, targeting];
+        const campaignName = campaignParts.filter(Boolean).join("_");
+        document.getElementById("campaignNamePPC").value = campaignName;
+
+        // 2. Build Insertion Order Display Box String
         if (platform === "dv") {
-          if (!ioType) {
-            document.getElementById("campaignNamePPC").value = "";
-            generateFinalURL();
-            return;
-          }
-          parts.push(ioType);
+          // Ready to add more custom parameters inside this array when you need them!
+          const ioParts = [ioType]; 
+          document.getElementById("ioNameDisplay").value = ioParts.filter(Boolean).join("_");
+        } else {
+          document.getElementById("ioNameDisplay").value = "";
         }
 
-        const campaignName = parts.filter(Boolean).join("_");
-
-        document.getElementById("campaignNamePPC").value = campaignName;
         generateFinalURL();
       }
 
@@ -693,14 +721,14 @@
         document.getElementById("finalURL").value = url;
       }
 
-      function copyCampaignName() {
-        const campaignName = document.getElementById("campaignNamePPC").value;
-        navigator.clipboard.writeText(campaignName).then(() => {
-          document.getElementById("copyIcon").textContent = "✓";
-          document.getElementById("copyText").textContent = "Copied!";
+      function copyToClipboard(inputId, iconId, textId) {
+        const textValue = document.getElementById(inputId).value;
+        navigator.clipboard.writeText(textValue).then(() => {
+          document.getElementById(iconId).textContent = "✓";
+          document.getElementById(textId).textContent = "Copied!";
           setTimeout(() => {
-            document.getElementById("copyIcon").textContent = "📋";
-            document.getElementById("copyText").textContent = "Copy";
+            document.getElementById(iconId).textContent = "📋";
+            document.getElementById(textId).textContent = "Copy";
           }, 2000);
         });
       }
@@ -741,7 +769,9 @@
         document.getElementById("marketingTag").value = "";
         document.getElementById("finalURL").value = "";
         document.getElementById("dvInsertionOrder").value = "";
+        document.getElementById("ioNameDisplay").value = "";
         document.getElementById("dvInsertionOrderSection").style.display = "none";
+        document.getElementById("ioDisplaySection").style.display = "none";
         document.getElementById("ppcSection").style.display = "none";
         document.getElementById("manualCampaignSection").style.display = "flex";
         document.getElementById("vanityField").style.display = "none";
