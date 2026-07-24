@@ -11,12 +11,6 @@
           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
           Cantarell, sans-serif;
       }
-      /* HIGHLIGHT NEW CHANGES */
-      .highlight-change {
-        background-color: #fef08a;
-        padding: 2px 4px;
-        border-radius: 2px;
-      }
     </style>
   </head>
   <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
@@ -194,6 +188,7 @@
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
+
             <!-- Insertion Order Type (DV360 Only) -->
             <div
               id="dvInsertionOrderSection"
@@ -227,9 +222,7 @@
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded bg-gray-50"
               />
               <button
-                onclick="
-                  copyToClipboard('campaignNamePPC', 'copyIcon', 'copyText')
-                "
+                onclick="copyToClipboard('campaignNamePPC', 'copyIcon', 'copyText')"
                 class="px-4 py-2 h-10 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 whitespace-nowrap"
               >
                 <span id="copyIcon">📋</span>
@@ -238,14 +231,8 @@
             </div>
 
             <!-- Insertion Order Name Display Box (DV360 Only) -->
-            <div
-              id="ioDisplaySection"
-              class="flex items-center gap-4 mt-4"
-              style="display: none"
-            >
-              <label class="w-48 font-semibold text-gray-700"
-                >Insertion Order</label
-              >
+            <div id="ioDisplaySection" class="flex items-center gap-4 mt-4" style="display: none">
+              <label class="w-48 font-semibold text-gray-700">Insertion Order</label>
               <input
                 type="text"
                 id="ioNameDisplay"
@@ -253,9 +240,7 @@
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded bg-gray-50"
               />
               <button
-                onclick="
-                  copyToClipboard('ioNameDisplay', 'copyIOIcon', 'copyIOText')
-                "
+                onclick="copyToClipboard('ioNameDisplay', 'copyIOIcon', 'copyIOText')"
                 class="px-4 py-2 h-10 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 whitespace-nowrap"
               >
                 <span id="copyIOIcon">📋</span>
@@ -460,7 +445,7 @@
         a: "a (Audio)",
         dis: "dis (Discovery)",
         ds_v: "ds_v (Display and Video)",
-        programmatic: "programmatic (Programmatic)",
+        programmatic: "programmatic (Programmatic)"
       };
 
       const utmPurposeMediumMap = {
@@ -620,9 +605,8 @@
           dvSection.style.display = "flex";
           ioDisplaySection.style.display = "flex";
 
-          // Clear selection and forcefully inject/select programmatic
-          campaignTypeSelect.innerHTML =
-            '<option value="programmatic" selected>programmatic (Programmatic)</option>';
+          // Force programmatic choice
+          campaignTypeSelect.innerHTML = '<option value="programmatic" selected>programmatic (Programmatic)</option>';
           campaignTypeSelect.disabled = true;
 
           // Force targeting value directly
@@ -663,7 +647,7 @@
         const bu = document.getElementById("businessUnit").value;
         const product = document.getElementById("productName").value;
         const platform = document.getElementById("platform").value;
-        let campaignType = document.getElementById("campaignType").value; // <-- Changed from const to let
+        let campaignType = document.getElementById("campaignType").value;
         const targeting = document.getElementById("targeting").value;
         const ioType = document.getElementById("dvInsertionOrder").value;
 
@@ -672,18 +656,15 @@
           campaignType = "prog";
         }
 
-        // 1. Build Campaign String (No longer appended with ioType)
+        // 1. Build Campaign String (BU_Product_Platform_CampaignType_Targeting)
         const campaignParts = [bu, product, platform, campaignType, targeting];
         const campaignName = campaignParts.filter(Boolean).join("_");
         document.getElementById("campaignNamePPC").value = campaignName;
 
-        // 2. Build Insertion Order Display Box String
+        // 2. Build Insertion Order String (BU_Product_Platform_IOType_Targeting)
         if (platform === "dv") {
-          // Ready to add more custom parameters inside this array when you need them!
-          const ioParts = [ioType];
-          document.getElementById("ioNameDisplay").value = ioParts
-            .filter(Boolean)
-            .join("_");
+          const ioParts = [bu, product, platform, ioType, targeting]; 
+          document.getElementById("ioNameDisplay").value = ioParts.filter(Boolean).join("_");
         } else {
           document.getElementById("ioNameDisplay").value = "";
         }
@@ -773,12 +754,11 @@
         document.getElementById("businessUnit").value = "";
         document.getElementById("productName").value = "";
         document.getElementById("platform").value = "";
-
-        // Reset the Campaign Type selection and options mapping completely
+        
         const campaignTypeSelect = document.getElementById("campaignType");
         campaignTypeSelect.innerHTML = '<option value="">Select Type</option>';
         campaignTypeSelect.disabled = false;
-
+        
         document.getElementById("targeting").value = "";
         document.getElementById("targeting").readOnly = false;
         document.getElementById("campaignNamePPC").value = "";
@@ -788,8 +768,7 @@
         document.getElementById("finalURL").value = "";
         document.getElementById("dvInsertionOrder").value = "";
         document.getElementById("ioNameDisplay").value = "";
-        document.getElementById("dvInsertionOrderSection").style.display =
-          "none";
+        document.getElementById("dvInsertionOrderSection").style.display = "none";
         document.getElementById("ioDisplaySection").style.display = "none";
         document.getElementById("ppcSection").style.display = "none";
         document.getElementById("manualCampaignSection").style.display = "flex";
