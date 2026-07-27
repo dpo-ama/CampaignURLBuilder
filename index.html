@@ -177,7 +177,7 @@
               </select>
             </div>
 
-            <!-- Targeting -->
+            <!-- Campaign Targeting -->
             <div class="flex items-center gap-4">
               <label class="w-48 font-semibold text-gray-700">Targeting</label>
               <input
@@ -210,6 +210,24 @@
                 <option value="v">v (video)</option>
                 <option value="yt">yt (YouTube)</option>
               </select>
+            </div>
+
+            <!-- Insertion Order Targeting (DV360 Only) -->
+            <div
+              id="dvIOTargetingSection"
+              class="flex items-center gap-4"
+              style="display: none"
+            >
+              <label class="w-48 font-semibold text-gray-700">
+                Insertion Order Targeting
+              </label>
+              <input
+                type="text"
+                id="ioTargeting"
+                oninput="generateCampaignFields()"
+                placeholder="e.g., generic, demo, interest, lookalike, remarketing"
+                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
             </div>
 
             <!-- Campaign Name (Auto-generated) -->
@@ -587,6 +605,7 @@
         const campaignTypeSelect = document.getElementById("campaignType");
         const targeting = document.getElementById("targeting");
         const dvSection = document.getElementById("dvInsertionOrderSection");
+        const dvIOTargetingSection = document.getElementById("dvIOTargetingSection");
         const ioDisplaySection = document.getElementById("ioDisplaySection");
 
         campaignTypeSelect.innerHTML = '<option value="">Select Type</option>';
@@ -603,6 +622,7 @@
         if (platform === "dv") {
           // Show IO setup fields
           dvSection.style.display = "flex";
+          dvIOTargetingSection.style.display = "flex";
           ioDisplaySection.style.display = "flex";
 
           // Force programmatic choice
@@ -614,11 +634,13 @@
           targeting.readOnly = true;
         } else {
           dvSection.style.display = "none";
+          dvIOTargetingSection.style.display = "none";
           ioDisplaySection.style.display = "none";
           campaignTypeSelect.disabled = false;
           targeting.readOnly = false;
           targeting.value = "";
           document.getElementById("dvInsertionOrder").value = "";
+          document.getElementById("ioTargeting").value = "";
           document.getElementById("ioNameDisplay").value = "";
         }
 
@@ -650,6 +672,7 @@
         let campaignType = document.getElementById("campaignType").value;
         const targeting = document.getElementById("targeting").value;
         const ioType = document.getElementById("dvInsertionOrder").value;
+        const ioTargeting = document.getElementById("ioTargeting").value;
 
         // Abbreviate programmatic to prog for the campaign string
         if (campaignType === "programmatic") {
@@ -661,9 +684,9 @@
         const campaignName = campaignParts.filter(Boolean).join("_");
         document.getElementById("campaignNamePPC").value = campaignName;
 
-        // 2. Build Insertion Order String (BU_Product_Platform_IOType) - targeting omitted
+        // 2. Build Insertion Order String (BU_Product_Platform_IOType_IOTargeting)
         if (platform === "dv") {
-          const ioParts = [bu, product, platform, ioType]; 
+          const ioParts = [bu, product, platform, ioType, ioTargeting]; 
           document.getElementById("ioNameDisplay").value = ioParts.filter(Boolean).join("_");
         } else {
           document.getElementById("ioNameDisplay").value = "";
@@ -767,8 +790,10 @@
         document.getElementById("marketingTag").value = "";
         document.getElementById("finalURL").value = "";
         document.getElementById("dvInsertionOrder").value = "";
+        document.getElementById("ioTargeting").value = "";
         document.getElementById("ioNameDisplay").value = "";
         document.getElementById("dvInsertionOrderSection").style.display = "none";
+        document.getElementById("dvIOTargetingSection").style.display = "none";
         document.getElementById("ioDisplaySection").style.display = "none";
         document.getElementById("ppcSection").style.display = "none";
         document.getElementById("manualCampaignSection").style.display = "flex";
