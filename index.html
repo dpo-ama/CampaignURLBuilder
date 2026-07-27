@@ -205,10 +205,10 @@
                 class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
               >
                 <option value="">Select Type</option>
-                <option value="audio">Audio</option>
-                <option value="display">Display</option>
-                <option value="video">Video</option>
-                <option value="youtube">YouTube</option>
+                <option value="a">a (audio)</option>
+                <option value="ds">ds (display)</option>
+                <option value="v">v (video)</option>
+                <option value="yt">yt (YouTube)</option>
               </select>
             </div>
 
@@ -609,7 +609,7 @@
           campaignTypeSelect.innerHTML = '<option value="programmatic" selected>programmatic (Programmatic)</option>';
           campaignTypeSelect.disabled = true;
 
-          // Force targeting value directly
+          // Force targeting value directly for Campaign
           targeting.value = "all";
           targeting.readOnly = true;
         } else {
@@ -661,9 +661,9 @@
         const campaignName = campaignParts.filter(Boolean).join("_");
         document.getElementById("campaignNamePPC").value = campaignName;
 
-        // 2. Build Insertion Order String (BU_Product_Platform_IOType_Targeting)
+        // 2. Build Insertion Order String (BU_Product_Platform_IOType) - targeting omitted
         if (platform === "dv") {
-          const ioParts = [bu, product, platform, ioType, targeting]; 
+          const ioParts = [bu, product, platform, ioType]; 
           document.getElementById("ioNameDisplay").value = ioParts.filter(Boolean).join("_");
         } else {
           document.getElementById("ioNameDisplay").value = "";
