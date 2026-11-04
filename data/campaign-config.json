@@ -1,0 +1,766 @@
+{
+  "schemaVersion": 1,
+  "purposes": [
+    {
+      "id": "ppc",
+      "label": "PPC",
+      "mediums": [
+        "cpc",
+        "cpm"
+      ],
+      "campaign": {
+        "mode": "generated",
+        "required": true
+      },
+      "content": {
+        "mode": "manual"
+      }
+    },
+    {
+      "id": "email",
+      "label": "Email",
+      "mediums": [
+        "email",
+        "sms",
+        "push"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "manual"
+      }
+    },
+    {
+      "id": "organic-social",
+      "label": "Organic Social",
+      "mediums": [
+        "social"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "manual"
+      }
+    },
+    {
+      "id": "mobile-app-apptile",
+      "label": "Mobile App - Apptile",
+      "mediums": [
+        "referral"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "manual"
+      }
+    },
+    {
+      "id": "vanity-url",
+      "label": "Vanity URL",
+      "mediums": [
+        "multi",
+        "print",
+        "direct_mail"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "vanityPrefix",
+        "prefix": "redirect_"
+      },
+      "showVanityField": true,
+      "sourceOverride": {
+        "mode": "select",
+        "options": [
+          "vanity"
+        ]
+      }
+    },
+    {
+      "id": "offline",
+      "label": "Offline",
+      "mediums": [
+        "offline"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "manual"
+      }
+    },
+    {
+      "id": "qr-code",
+      "label": "QR Code",
+      "mediums": [
+        "multi",
+        "print",
+        "direct_mail"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "fixed",
+        "value": "qr_code"
+      },
+      "sourceOverride": {
+        "mode": "text"
+      }
+    },
+    {
+      "id": "business-profiles",
+      "label": "Business Profiles",
+      "mediums": [
+        "organic"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": false
+      },
+      "content": {
+        "mode": "manual"
+      }
+    },
+    {
+      "id": "survey",
+      "label": "Survey",
+      "mediums": [
+        "survey"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "manual"
+      }
+    },
+    {
+      "id": "affiliate-paid-referral",
+      "label": "Affiliate/Paid Referral",
+      "mediums": [
+        "affiliate",
+        "paid_referral"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "manual"
+      }
+    },
+    {
+      "id": "internal",
+      "label": "Internal",
+      "mediums": [
+        "internal"
+      ],
+      "campaign": {
+        "mode": "manual",
+        "required": true
+      },
+      "content": {
+        "mode": "manual"
+      }
+    }
+  ],
+  "mediums": {
+    "affiliate": {
+      "label": "Affiliate",
+      "source": {
+        "mode": "text"
+      }
+    },
+    "cpc": {
+      "label": "CPC",
+      "source": {
+        "mode": "select",
+        "options": [
+          "bing",
+          "disney",
+          "facebook",
+          "google",
+          "instagram",
+          "linkedin",
+          "netflix",
+          "reddit",
+          "snapchat",
+          "spotify",
+          "tiktok",
+          "twn",
+          "x",
+          "yahoo",
+          "quantcast"
+        ]
+      }
+    },
+    "cpm": {
+      "label": "CPM",
+      "source": {
+        "mode": "select",
+        "options": [
+          "dbm",
+          "amz"
+        ]
+      }
+    },
+    "direct_mail": {
+      "label": "Direct Mail",
+      "source": {
+        "mode": "select",
+        "options": [
+          "vanity"
+        ]
+      }
+    },
+    "email": {
+      "label": "Email",
+      "source": {
+        "mode": "select",
+        "options": [
+          "broadcast",
+          "experience",
+          "transactional",
+          "zeta"
+        ]
+      }
+    },
+    "sms": {
+      "label": "SMS",
+      "source": {
+        "mode": "select",
+        "options": [
+          "broadcast",
+          "experience",
+          "transactional",
+          "zeta"
+        ]
+      }
+    },
+    "push": {
+      "label": "Push",
+      "source": {
+        "mode": "select",
+        "options": [
+          "broadcast",
+          "experience",
+          "transactional",
+          "zeta"
+        ]
+      }
+    },
+    "internal": {
+      "label": "Internal",
+      "source": {
+        "mode": "text"
+      }
+    },
+    "multi": {
+      "label": "Multi",
+      "source": {
+        "mode": "select",
+        "options": [
+          "vanity"
+        ]
+      }
+    },
+    "organic": {
+      "label": "Organic",
+      "source": {
+        "mode": "select",
+        "options": [
+          "bing",
+          "google",
+          "gmb-listing",
+          "gmb-post"
+        ]
+      }
+    },
+    "paid_referral": {
+      "label": "Paid Referral",
+      "source": {
+        "mode": "text"
+      }
+    },
+    "print": {
+      "label": "Print",
+      "source": {
+        "mode": "select",
+        "options": [
+          "vanity"
+        ]
+      }
+    },
+    "referral": {
+      "label": "Referral",
+      "source": {
+        "mode": "select",
+        "options": [
+          "apptile"
+        ]
+      }
+    },
+    "social": {
+      "label": "Social",
+      "source": {
+        "mode": "select",
+        "options": [
+          "facebook",
+          "instagram",
+          "linkedin",
+          "reddit",
+          "snapchat",
+          "spotify",
+          "tiktok",
+          "x"
+        ]
+      }
+    },
+    "survey": {
+      "label": "Survey",
+      "source": {
+        "mode": "text"
+      }
+    },
+    "offline": {
+      "label": "Offline",
+      "source": {
+        "mode": "text"
+      }
+    },
+    "digital_display": {
+      "label": "Digital Display",
+      "source": {
+        "mode": "select",
+        "options": [
+          "vanity"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "bing": {
+      "label": "bing (Bing)"
+    },
+    "disney": {
+      "label": "disney (Disney)"
+    },
+    "facebook": {
+      "label": "facebook (Facebook)"
+    },
+    "google": {
+      "label": "google (Google)"
+    },
+    "instagram": {
+      "label": "instagram (Instagram)"
+    },
+    "linkedin": {
+      "label": "linkedin (LinkedIn)"
+    },
+    "netflix": {
+      "label": "netflix (Netflix)"
+    },
+    "reddit": {
+      "label": "reddit (Reddit)"
+    },
+    "snapchat": {
+      "label": "snapchat (Snapchat)"
+    },
+    "spotify": {
+      "label": "spotify (Spotify)"
+    },
+    "tiktok": {
+      "label": "tiktok (TikTok)"
+    },
+    "twn": {
+      "label": "twn (The Weather Network)"
+    },
+    "x": {
+      "label": "x (X)"
+    },
+    "yahoo": {
+      "label": "yahoo (Yahoo)"
+    },
+    "quantcast": {
+      "label": "quantcast (Quantcast)"
+    },
+    "dbm": {
+      "label": "dbm (DBM)"
+    },
+    "amz": {
+      "label": "amz (Amazon)"
+    },
+    "vanity": {
+      "label": "vanity (Vanity)"
+    },
+    "broadcast": {
+      "label": "broadcast (Broadcast)"
+    },
+    "experience": {
+      "label": "experience (Experience)"
+    },
+    "transactional": {
+      "label": "transactional (Transactional)"
+    },
+    "zeta": {
+      "label": "zeta (Zeta)"
+    },
+    "gmb-listing": {
+      "label": "gmb-listing (GMB Listing)"
+    },
+    "gmb-post": {
+      "label": "gmb-post (GMB Post)"
+    },
+    "apptile": {
+      "label": "apptile (Apptile)"
+    }
+  },
+  "businessUnits": [
+    {
+      "value": "ama",
+      "label": "ama (Multiple Business Units)"
+    },
+    {
+      "value": "bnk",
+      "label": "bnk (Banking / Bridgewater Bank)"
+    },
+    {
+      "value": "com",
+      "label": "com (Corporate Purpose / Member Experience / Corp Com)"
+    },
+    {
+      "value": "ctc",
+      "label": "ctc (Contact Centre)"
+    },
+    {
+      "value": "ded",
+      "label": "ded (Driver Education)"
+    },
+    {
+      "value": "ent",
+      "label": "ent (Enterprise Support)"
+    },
+    {
+      "value": "fin",
+      "label": "fin (Finance)"
+    },
+    {
+      "value": "gov",
+      "label": "gov (Government & Stakeholder Relations)"
+    },
+    {
+      "value": "hrd",
+      "label": "hrd (Human Resources / Recruitment)"
+    },
+    {
+      "value": "ins",
+      "label": "ins (Insurance)"
+    },
+    {
+      "value": "isd",
+      "label": "isd (Information Services)"
+    },
+    {
+      "value": "mem",
+      "label": "mem (Membership)"
+    },
+    {
+      "value": "mkt",
+      "label": "mkt (Marketing)"
+    },
+    {
+      "value": "reg",
+      "label": "reg (Registries)"
+    },
+    {
+      "value": "rew",
+      "label": "rew (Rewards)"
+    },
+    {
+      "value": "rsa",
+      "label": "rsa (Roadside Assistance)"
+    },
+    {
+      "value": "trv",
+      "label": "trv (Travel)"
+    },
+    {
+      "value": "auto",
+      "label": "auto (Automotive)"
+    },
+    {
+      "value": "adv",
+      "label": "adv (Advocacy)"
+    }
+  ],
+  "platforms": [
+    {
+      "value": "asa",
+      "label": "asa (Apple Search Ads)",
+      "campaignTypes": [
+        "app",
+        "s"
+      ]
+    },
+    {
+      "value": "amz",
+      "label": "amz (Amazon)",
+      "campaignTypes": [
+        "ds",
+        "v",
+        "ds_v"
+      ]
+    },
+    {
+      "value": "b",
+      "label": "b (Bing)",
+      "campaignTypes": [
+        "app",
+        "ds",
+        "s",
+        "sh",
+        "v",
+        "ds_v"
+      ]
+    },
+    {
+      "value": "dv",
+      "label": "dv (DV360)",
+      "campaignTypes": [
+        "programmatic"
+      ],
+      "campaignTypeLocked": true,
+      "targeting": {
+        "default": "all",
+        "readOnly": true
+      },
+      "showInsertionOrder": true
+    },
+    {
+      "value": "fb",
+      "label": "fb (Facebook)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "go",
+      "label": "go (Google)",
+      "campaignTypes": [
+        "app",
+        "dg",
+        "ds",
+        "pmax",
+        "rlsa",
+        "s",
+        "sh",
+        "sm",
+        "v",
+        "yt",
+        "ds_v"
+      ]
+    },
+    {
+      "value": "ig",
+      "label": "ig (Instagram)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "ln",
+      "label": "ln (LinkedIn)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "pn",
+      "label": "pn (Pinterest)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "q",
+      "label": "q (Quantcast)",
+      "campaignTypes": [
+        "ds",
+        "ds_v"
+      ]
+    },
+    {
+      "value": "rd",
+      "label": "rd (Reddit)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "sn",
+      "label": "sn (Snapchat)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "sp",
+      "label": "sp (Spotify)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "tk",
+      "label": "tk (TikTok)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "twn",
+      "label": "twn (The Weather Network)",
+      "campaignTypes": [
+        "ds",
+        "ds_v"
+      ]
+    },
+    {
+      "value": "x",
+      "label": "x (X)",
+      "campaignTypes": [
+        "ps"
+      ]
+    },
+    {
+      "value": "y",
+      "label": "y (Yahoo)",
+      "campaignTypes": [
+        "s",
+        "ds"
+      ]
+    }
+  ],
+  "campaignTypes": {
+    "app": {
+      "label": "app (App Download)"
+    },
+    "dg": {
+      "label": "dg (Demand Gen)"
+    },
+    "ds": {
+      "label": "ds (Display)"
+    },
+    "pmax": {
+      "label": "pmax (Performance Max)"
+    },
+    "ps": {
+      "label": "ps (Paid Social)"
+    },
+    "rlsa": {
+      "label": "rlsa (Remarketing Lists for Search Ads)"
+    },
+    "s": {
+      "label": "s (Search)"
+    },
+    "sm": {
+      "label": "sm (Smart)"
+    },
+    "sh": {
+      "label": "sh (Shopping)"
+    },
+    "v": {
+      "label": "v (Video)"
+    },
+    "yt": {
+      "label": "yt (YouTube)"
+    },
+    "a": {
+      "label": "a (Audio)"
+    },
+    "dis": {
+      "label": "dis (Discovery)"
+    },
+    "ds_v": {
+      "label": "ds_v (Display and Video)"
+    },
+    "programmatic": {
+      "label": "programmatic (Programmatic)",
+      "outputCode": "prog"
+    }
+  },
+  "insertionOrderTypes": [
+    {
+      "value": "a",
+      "label": "a (Audio)"
+    },
+    {
+      "value": "ds",
+      "label": "ds (Display)"
+    },
+    {
+      "value": "v",
+      "label": "v (Video)"
+    },
+    {
+      "value": "yt",
+      "label": "yt (YouTube)"
+    }
+  ],
+  "naming": {
+    "separator": "_",
+    "campaignParts": [
+      "businessUnit",
+      "productName",
+      "platform",
+      "campaignType",
+      "targeting"
+    ],
+    "insertionOrderParts": [
+      "businessUnit",
+      "productName",
+      "platform",
+      "insertionOrderType",
+      "insertionOrderTargeting"
+    ]
+  },
+  "queryParameters": [
+    {
+      "field": "source",
+      "name": "utm_source",
+      "includeWhenEmpty": true
+    },
+    {
+      "field": "medium",
+      "name": "utm_medium",
+      "includeWhenEmpty": true
+    },
+    {
+      "field": "campaign",
+      "name": "utm_campaign",
+      "includeWhenEmpty": false
+    },
+    {
+      "field": "content",
+      "name": "utm_content",
+      "includeWhenEmpty": false
+    },
+    {
+      "field": "marketingTag",
+      "name": "marketingtag",
+      "includeWhenEmpty": false
+    }
+  ]
+}
