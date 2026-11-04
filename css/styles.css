@@ -1,4 +1,232 @@
-body {
+:root {
+  color-scheme: light;
+  --accent: #5146cf;
+  --line: #d9dfeb;
+}
+
+.site-body {
+  min-height: 100vh;
+  margin: 0;
+  color: #202447;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, #eeeefe, #f7f9fc 48%, #e9faf7);
+}
+
+.hero {
+  background: linear-gradient(115deg, #20265e, #4140ac 57%, #5374cc);
+  box-shadow: 0 18px 38px -24px #1d247c;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -6rem;
+  right: -3rem;
+  width: 20rem;
+  height: 20rem;
+  border: 1px solid #ffffff55;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3rem #ffffff0d, 0 0 0 6rem #ffffff0a;
+}
+
+.hero-icon {
+  display: grid;
+  flex: 0 0 3.5rem;
+  place-items: center;
+  height: 3.5rem;
+  border: 1px solid #ffffff66;
+  border-radius: 1rem;
+  background: #ffffff26;
+}
+
+.hero-icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.form-section {
+  padding: 2rem 2.25rem;
+}
+
+.section-number {
+  display: grid;
+  flex: 0 0 2.4rem;
+  place-items: center;
+  height: 2.4rem;
+  border-radius: 0.8rem;
+  color: var(--accent);
+  background: #eeedff;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.field-label {
+  flex: 0 0 11rem;
+  color: #35405f;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.field-control,
+.result-textarea {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  outline: none;
+  color: #202447;
+  background: #fff;
+  box-shadow: 0 1px 2px #2734590d;
+  font: inherit;
+  font-size: 0.875rem;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+
+.field-control {
+  height: 2.8rem;
+  padding: 0 0.9rem;
+}
+
+.field-control::placeholder {
+  color: #98a3b9;
+}
+
+.field-control:hover:not(:disabled):not([readonly]),
+.result-textarea:hover {
+  border-color: #a9a5ec;
+}
+
+.field-control:focus,
+.result-textarea:focus {
+  border-color: #776de4;
+  box-shadow: 0 0 0 4px #6659e626;
+}
+
+.field-control:disabled,
+.field-control[readonly] {
+  color: #495370;
+  background: #f1f3f8;
+}
+
+.ppc-panel {
+  padding: 1.5rem;
+  border: 1px solid #dcd9fb;
+  border-left: 4px solid #7165df;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #f8f6ff, #f2f8ff);
+}
+
+.generated-row {
+  padding-top: 1.25rem;
+  border-top: 1px solid #deddf3;
+}
+
+.reset-button,
+.copy-button,
+.primary-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  height: 2.75rem;
+  padding: 0 1.1rem;
+  border-radius: 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 150ms, border-color 150ms, transform 150ms;
+}
+
+.reset-button {
+  border: 1px solid #ffffff73;
+  color: #fff;
+  background: #ffffff1c;
+}
+
+.reset-button:hover {
+  background: #ffffff33;
+}
+
+.copy-button {
+  border: 1px solid #c8c5e9;
+  color: #4037a1;
+  background: #fff;
+}
+
+.copy-button:hover {
+  border-color: #8179d8;
+  background: #f1efff;
+}
+
+.primary-button {
+  border: 1px solid #4c43c4;
+  color: #fff;
+  background: var(--accent);
+  box-shadow: 0 4px 10px #4f46c333;
+}
+
+.primary-button:hover {
+  background: #4036b4;
+  transform: translateY(-1px);
+}
+
+.reset-button:focus-visible,
+.copy-button:focus-visible,
+.primary-button:focus-visible {
+  outline: 3px solid #9ddadf;
+  outline-offset: 2px;
+}
+
+.reset-button:disabled,
+.copy-button:disabled,
+.primary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.result-textarea {
+  min-height: 6rem;
+  padding: 0.85rem 1rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+@media (max-width: 640px) {
+  .hero-icon {
+    flex-basis: 3rem;
+    height: 3rem;
+  }
+
+  .form-section {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .field-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .field-label {
+    flex-basis: auto;
+  }
+
+  .ppc-panel {
+    padding: 1.2rem;
+  }
+
+  .field-row > .copy-button,
+  .primary-button {
+    width: 100%;
+  }
 }

@@ -27,7 +27,6 @@ function setVisible(element, visible, display = "flex") {
 
 function setReadOnly(element, readOnly) {
   element.readOnly = readOnly;
-  element.classList.toggle("bg-gray-50", readOnly);
 }
 
 function validateConfig(data) {

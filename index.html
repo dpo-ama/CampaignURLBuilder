@@ -3,302 +3,331 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#20265e" />
     <title>Campaign URL Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://res.cdn.office.net/teams-js/2.19.0/js/MicrosoftTeams.min.js"></script>
     <link rel="stylesheet" href="./css/styles.css" />
     <script type="module" src="./js/app.js"></script>
   </head>
-  <body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8">
-      <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-800">Campaign URL Builder</h1>
-        <button
-          id="clearButton"
-          class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-semibold"
-        >
-          Clear All
-        </button>
-      </div>
+  <body class="site-body">
+    <main class="mx-auto max-w-5xl px-4 py-5 sm:px-6 sm:py-8 lg:py-10">
+      <header class="hero relative isolate overflow-hidden rounded-3xl px-7 pb-12 pt-8 text-white sm:px-10 sm:pb-14 sm:pt-10">
+        <div class="relative z-10 flex flex-wrap items-start gap-3 sm:flex-nowrap sm:gap-5">
+          <div class="hero-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1" />
+              <path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.1-1.1" />
+            </svg>
+          </div>
+          <div class="min-w-0 basis-[calc(100%-4rem)] flex-1 sm:basis-auto">
+            <p class="mb-2 text-[0.7rem] font-bold uppercase tracking-[0.18em] text-teal-200">Marketing <span class="px-1.5 text-white/60" aria-hidden="true">/</span> Link builder</p>
+            <h1 class="text-[clamp(1.85rem,4vw,2.6rem)] font-bold leading-tight tracking-tight">Campaign URL Builder</h1>
+            <p class="mt-3 max-w-xl text-sm leading-6 text-indigo-100 sm:text-base">Build a link that’s ready to share, with every campaign detail in its place.</p>
+          </div>
+          <button id="clearButton" type="button" class="reset-button ml-[3.8rem] sm:ml-0">Clear all</button>
+        </div>
+      </header>
 
       <p
         id="configError"
         role="alert"
         hidden
-        class="mb-4 rounded border border-red-300 bg-red-50 p-3 text-red-800"
+        class="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
       ></p>
 
-      <div class="space-y-4">
-        <!-- What is the UTMs for? -->
-        <div class="flex items-center gap-4">
-          <label class="w-48 font-semibold text-gray-700"
-            >What are the UTMs for?</label
-          >
-          <select
-            id="utmPurpose"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="">Select Purpose</option>
-          </select>
-        </div>
-
-        <!-- Vanity field -->
-        <div
-          id="vanityField"
-          class="flex items-center gap-4"
-          style="display: none"
-        >
-          <label class="w-48 font-semibold text-gray-700">Vanity</label>
-          <input
-            type="text"
-            id="vanity"
-            placeholder="Enter vanity name"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-
-        <!-- Landing Page -->
-        <div class="flex items-center gap-4">
-          <label class="w-48 font-semibold text-gray-700">Landing Page</label>
-          <input
-            type="text"
-            id="landingPage"
-            placeholder="https://ama.ab.ca/page"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-
-        <!-- Medium -->
-        <div class="flex items-center gap-4">
-          <label class="w-48 font-semibold text-gray-700">Medium</label>
-          <select
-            id="medium"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="">Select Medium</option>
-          </select>
-        </div>
-
-        <!-- Source -->
-        <div class="flex items-center gap-4">
-          <label class="w-48 font-semibold text-gray-700">Source</label>
-          <input
-            type="text"
-            id="sourceTextbox"
-            placeholder="Enter source name"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            style="display: none"
-          />
-          <select
-            id="sourceDropdown"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="">Select Source</option>
-          </select>
-        </div>
-
-        <!-- UTM Campaign Components (PPC Only) -->
-        <div
-          id="ppcSection"
-          class="border-2 border-purple-200 rounded-lg p-6 bg-purple-50"
-          style="display: none"
-        >
-          <h2 class="text-xl font-bold text-purple-800 mb-4">
-            UTM Campaign Components
-          </h2>
-          <div class="space-y-4">
-            <!-- Business Unit -->
-            <div class="flex items-center gap-4">
-              <label class="w-48 font-semibold text-gray-700"
-                >Business Unit</label
-              >
-              <select
-                id="businessUnit"
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              >
-                <option value="">Select Business Unit</option>
-              </select>
-            </div>
-
-            <!-- Product Name -->
-            <div class="flex items-center gap-4">
-              <label class="w-48 font-semibold text-gray-700"
-                >Product Name</label
-              >
-              <input
-                type="text"
-                id="productName"
-                placeholder="e.g., vrar, twhd, acq, hotel, tmi"
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-            </div>
-
-            <!-- Platform -->
-            <div class="flex items-center gap-4">
-              <label class="w-48 font-semibold text-gray-700">Platform</label>
-              <select
-                id="platform"
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              >
-                <option value="">Select Platform</option>
-              </select>
-            </div>
-
-            <!-- Campaign Type -->
-            <div class="flex items-center gap-4">
-              <label class="w-48 font-semibold text-gray-700"
-                >Campaign Type</label
-              >
-              <select
-                id="campaignType"
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              >
-                <option value="">Select Type</option>
-              </select>
-            </div>
-
-            <!-- Campaign Targeting -->
-            <div class="flex items-center gap-4">
-              <label class="w-48 font-semibold text-gray-700">Targeting</label>
-              <input
-                type="text"
-                id="targeting"
-                placeholder="e.g., generic, demo, interest, lookalike"
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-            </div>
-
-            <!-- Insertion Order Type (DV360 Only) -->
-            <div
-              id="dvInsertionOrderSection"
-              class="flex items-center gap-4"
-              style="display: none"
-            >
-              <label class="w-48 font-semibold text-gray-700">
-                Insertion Order Type
-              </label>
-
-              <select
-                id="dvInsertionOrder"
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="">Select Type</option>
-              </select>
-            </div>
-
-            <!-- Insertion Order Targeting (DV360 Only) -->
-            <div
-              id="dvIOTargetingSection"
-              class="flex items-center gap-4"
-              style="display: none"
-            >
-              <label class="w-48 font-semibold text-gray-700">
-                Insertion Order Targeting
-              </label>
-              <input
-                type="text"
-                id="ioTargeting"
-                placeholder="e.g., generic, demo, interest, lookalike, remarketing"
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-            </div>
-
-            <!-- Campaign Name (Auto-generated) -->
-            <div class="flex items-center gap-4 mt-4">
-              <label class="w-48 font-semibold text-gray-700">Campaign</label>
-              <input
-                type="text"
-                id="campaignNamePPC"
-                readonly
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded bg-gray-50"
-              />
-              <button
-                id="copyCampaignButton"
-                class="px-4 py-2 h-10 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 whitespace-nowrap"
-              >
-                <span id="copyIcon">📋</span>
-                <span id="copyText">Copy</span>
-              </button>
-            </div>
-
-            <!-- Insertion Order Name Display Box (DV360 Only) -->
-            <div id="ioDisplaySection" class="flex items-center gap-4 mt-4" style="display: none">
-              <label class="w-48 font-semibold text-gray-700">Insertion Order</label>
-              <input
-                type="text"
-                id="ioNameDisplay"
-                readonly
-                class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded bg-gray-50"
-              />
-              <button
-                id="copyIOButton"
-                class="px-4 py-2 h-10 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 whitespace-nowrap"
-              >
-                <span id="copyIOIcon">📋</span>
-                <span id="copyIOText">Copy</span>
-              </button>
+      <div class="relative mx-1 -mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-indigo-950/10 sm:mx-5 sm:-mt-5">
+        <section aria-labelledby="destinationHeading" class="form-section">
+          <div class="mb-7 flex items-center gap-3.5">
+            <span class="section-number" aria-hidden="true">01</span>
+            <div>
+              <h2 id="destinationHeading" class="text-lg font-bold text-indigo-950">Destination</h2>
+              <p class="mt-1 text-sm text-slate-500">Choose where this campaign should lead.</p>
             </div>
           </div>
-        </div>
+          <div class="space-y-5">
+            <!-- Campaign purpose -->
+            <div class="field-row">
+              <label for="utmPurpose" class="field-label">Campaign purpose</label>
+              <select
+                id="utmPurpose"
+                class="field-control"
+              >
+                <option value="">Select Purpose</option>
+              </select>
+            </div>
 
-        <!-- Manual Campaign Name (Non-PPC) -->
-        <div id="manualCampaignSection" class="flex items-center gap-4">
-          <label class="w-48 font-semibold text-gray-700">Campaign</label>
-          <input
-            type="text"
-            id="manualCampaignName"
-            placeholder="utm_campaign=bu_campaignname"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
+            <!-- Vanity field -->
+            <div
+              id="vanityField"
+              class="field-row"
+              style="display: none"
+            >
+              <label for="vanity" class="field-label">Vanity</label>
+              <input
+                type="text"
+                id="vanity"
+                placeholder="Enter vanity name"
+                class="field-control"
+              />
+            </div>
 
-        <!-- Content Name -->
-        <div class="flex items-center gap-4">
-          <label class="w-48 font-semibold text-gray-700">Content</label>
-          <input
-            type="text"
-            id="contentName"
-            placeholder="(optional) utm_content=creativesize, cta button"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
+            <!-- Landing page -->
+            <div class="field-row">
+              <label for="landingPage" class="field-label">Landing page</label>
+              <input
+                type="url"
+                id="landingPage"
+                placeholder="https://ama.ab.ca/page"
+                class="field-control"
+              />
+            </div>
+          </div>
+        </section>
 
-        <!-- Marketing Tag -->
-        <div class="flex items-center gap-4">
-          <label class="w-48 font-semibold text-gray-700">Marketing Tag</label>
-          <input
-            type="text"
-            id="marketingTag"
-            placeholder="bu_campaignname"
-            class="flex-1 h-10 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
+        <section aria-labelledby="trackingHeading" class="form-section border-t border-slate-100">
+          <div class="mb-7 flex items-center gap-3.5">
+            <span class="section-number" aria-hidden="true">02</span>
+            <div>
+              <h2 id="trackingHeading" class="text-lg font-bold text-indigo-950">Tracking details</h2>
+              <p class="mt-1 text-sm text-slate-500">Add the values that identify this campaign.</p>
+            </div>
+          </div>
+          <div class="space-y-5">
+            <!-- Medium -->
+            <div class="field-row">
+              <label for="medium" class="field-label">Medium</label>
+              <select
+                id="medium"
+                class="field-control"
+              >
+                <option value="">Select Medium</option>
+              </select>
+            </div>
 
-        <p
-          id="urlError"
-          role="alert"
-          hidden
-          class="rounded border border-red-300 bg-red-50 p-3 text-red-800"
-        ></p>
+            <!-- Source -->
+            <div class="field-row">
+              <label id="sourceLabel" for="sourceDropdown" class="field-label">Source</label>
+              <input
+                type="text"
+                id="sourceTextbox"
+                aria-labelledby="sourceLabel"
+                placeholder="Enter source name"
+                class="field-control"
+                style="display: none"
+              />
+              <select
+                id="sourceDropdown"
+                class="field-control"
+              >
+                <option value="">Select Source</option>
+              </select>
+            </div>
 
-        <!-- Final URL -->
-        <div class="flex items-start gap-4 bg-green-50 p-4 rounded">
-          <label class="w-48 font-semibold text-gray-700 pt-2">Final URL</label>
-          <textarea
-            id="finalURL"
-            readonly
-            rows="3"
-            class="flex-1 px-3 py-2 border border-gray-300 rounded bg-gray-50 resize-none"
-          ></textarea>
-          <button
-            id="copyURLButton"
-            class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-2 whitespace-nowrap"
-          >
-            <span id="copyURLIcon">📋</span>
-            <span id="copyURLText">Copy</span>
-          </button>
-        </div>
+            <!-- UTM Campaign Components (PPC Only) -->
+            <div
+              id="ppcSection"
+              aria-labelledby="ppcHeading"
+              class="ppc-panel"
+              style="display: none"
+            >
+              <h3 id="ppcHeading" class="mb-5 text-base font-semibold text-slate-900">
+                UTM Campaign Components
+              </h3>
+              <div class="space-y-5">
+                <!-- Business Unit -->
+                <div class="field-row">
+                  <label for="businessUnit" class="field-label">Business Unit</label>
+                  <select
+                    id="businessUnit"
+                    class="field-control"
+                  >
+                    <option value="">Select Business Unit</option>
+                  </select>
+                </div>
+
+                <!-- Product Name -->
+                <div class="field-row">
+                  <label for="productName" class="field-label">Product Name</label>
+                  <input
+                    type="text"
+                    id="productName"
+                    placeholder="e.g., vrar, twhd, acq, hotel, tmi"
+                    class="field-control"
+                  />
+                </div>
+
+                <!-- Platform -->
+                <div class="field-row">
+                  <label for="platform" class="field-label">Platform</label>
+                  <select
+                    id="platform"
+                    class="field-control"
+                  >
+                    <option value="">Select Platform</option>
+                  </select>
+                </div>
+
+                <!-- Campaign Type -->
+                <div class="field-row">
+                  <label for="campaignType" class="field-label">Campaign Type</label>
+                  <select
+                    id="campaignType"
+                    class="field-control"
+                  >
+                    <option value="">Select Type</option>
+                  </select>
+                </div>
+
+                <!-- Campaign Targeting -->
+                <div class="field-row">
+                  <label for="targeting" class="field-label">Targeting</label>
+                  <input
+                    type="text"
+                    id="targeting"
+                    placeholder="e.g., generic, demo, interest, lookalike"
+                    class="field-control"
+                  />
+                </div>
+
+                <!-- Insertion Order Type (DV360 Only) -->
+                <div
+                  id="dvInsertionOrderSection"
+                  class="field-row"
+                  style="display: none"
+                >
+                  <label for="dvInsertionOrder" class="field-label">
+                    Insertion Order Type
+                  </label>
+
+                  <select
+                    id="dvInsertionOrder"
+                    class="field-control"
+                  >
+                    <option value="">Select Type</option>
+                  </select>
+                </div>
+
+                <!-- Insertion Order Targeting (DV360 Only) -->
+                <div
+                  id="dvIOTargetingSection"
+                  class="field-row"
+                  style="display: none"
+                >
+                  <label for="ioTargeting" class="field-label">
+                    Insertion Order Targeting
+                  </label>
+                  <input
+                    type="text"
+                    id="ioTargeting"
+                    placeholder="e.g., generic, demo, interest, lookalike, remarketing"
+                    class="field-control"
+                  />
+                </div>
+
+                <!-- Campaign Name (Auto-generated) -->
+                <div class="field-row generated-row">
+                  <label for="campaignNamePPC" class="field-label">Campaign</label>
+                  <input
+                    type="text"
+                    id="campaignNamePPC"
+                    readonly
+                    class="field-control"
+                  />
+                  <button
+                    id="copyCampaignButton"
+                    type="button"
+                    class="copy-button"
+                  >
+                    <span id="copyIcon" class="hidden" aria-hidden="true">📋</span>
+                    <span id="copyText">Copy</span>
+                  </button>
+                </div>
+
+                <!-- Insertion Order Name Display Box (DV360 Only) -->
+                <div id="ioDisplaySection" class="field-row" style="display: none">
+                  <label for="ioNameDisplay" class="field-label">Insertion Order</label>
+                  <input
+                    type="text"
+                    id="ioNameDisplay"
+                    readonly
+                    class="field-control"
+                  />
+                  <button
+                    id="copyIOButton"
+                    type="button"
+                    class="copy-button"
+                  >
+                    <span id="copyIOIcon" class="hidden" aria-hidden="true">📋</span>
+                    <span id="copyIOText">Copy</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Manual Campaign Name (Non-PPC) -->
+            <div id="manualCampaignSection" class="field-row">
+              <label for="manualCampaignName" class="field-label">Campaign</label>
+              <input
+                type="text"
+                id="manualCampaignName"
+                placeholder="utm_campaign=bu_campaignname"
+                class="field-control"
+              />
+            </div>
+
+            <!-- Content Name -->
+            <div class="field-row">
+              <label for="contentName" class="field-label">Content</label>
+              <input
+                type="text"
+                id="contentName"
+                placeholder="Optional: creative size, CTA button"
+                class="field-control"
+              />
+            </div>
+
+            <!-- Marketing Tag -->
+            <div class="field-row">
+              <label for="marketingTag" class="field-label">Marketing Tag</label>
+              <input
+                type="text"
+                id="marketingTag"
+                placeholder="bu_campaignname"
+                class="field-control"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="resultHeading" class="form-section border-t border-slate-200 bg-gradient-to-r from-teal-50 to-indigo-50">
+          <div class="mb-7 flex items-center gap-3.5">
+            <span class="section-number bg-teal-100 text-teal-700" aria-hidden="true">03</span>
+            <div>
+              <h2 id="resultHeading" class="text-lg font-bold text-indigo-950">Your tracking URL</h2>
+              <p class="mt-1 text-sm text-slate-500">The link updates as you fill in the form.</p>
+            </div>
+          </div>
+          <p id="urlError" role="alert" hidden class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"></p>
+          <label for="finalURL" class="sr-only">Final URL</label>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-start">
+            <textarea
+              id="finalURL"
+              readonly
+              rows="3"
+              class="result-textarea"
+            ></textarea>
+            <button
+              id="copyURLButton"
+              type="button"
+              class="primary-button"
+            >
+              <span id="copyURLIcon" class="hidden" aria-hidden="true">📋</span>
+              <span id="copyURLText">Copy</span>
+            </button>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   </body>
 </html>
