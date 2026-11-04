@@ -21,7 +21,7 @@
     "outline": "outline.png",
     "color": "color.png"
   },
-  "accentColor": "#4F46E5",
+  "accentColor": "#006DCE",
   "staticTabs": [
     {
       "entityId": "campaign-url-builder",

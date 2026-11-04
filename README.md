@@ -22,3 +22,8 @@ admin to upload it.
 
 After changing the manifest, increase its `version` before uploading an update.
 Changes to `index.html` are delivered through the GitHub Pages deployment.
+
+To limit who can use the Teams app, an admin can set its availability to specific
+users or groups in **Teams admin center → Teams apps → Manage apps → Campaign
+URL Builder → Users and groups → Edit availability**. This only controls the
+Teams app. The GitHub Pages URL remains publicly accessible.
