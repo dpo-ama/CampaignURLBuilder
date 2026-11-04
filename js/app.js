@@ -3,7 +3,7 @@ import { buildName, buildTrackingUrl } from "./url-builder.js";
 const field = (id) => document.getElementById(id);
 let config;
 
-// Teams needs this handshake even though the page also runs in a browser.
+// Microsoft Teams needs this handshake, even though the page also runs in a browser.
 window.microsoftTeams?.app?.initialize().catch(() => {});
 
 function selectedPurpose() {

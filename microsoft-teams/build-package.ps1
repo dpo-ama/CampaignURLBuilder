@@ -6,7 +6,7 @@ $packageFiles = @('manifest.json', 'color.png', 'outline.png')
 
 foreach ($name in $packageFiles) {
     if (-not (Test-Path -LiteralPath (Join-Path $packageDir $name) -PathType Leaf)) {
-        throw "Missing Teams app package file: $name"
+        throw "Missing Microsoft Teams app package file: $name"
     }
 }
 
