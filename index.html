@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campaign URL Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://res.cdn.office.net/teams-js/2.19.0/js/MicrosoftTeams.min.js"></script>
+    <script>
+      // Teams waits for this handshake before showing the page as an app tab.
+      // The same page also runs directly in a browser, where initialization can fail.
+      microsoftTeams.app.initialize().catch(() => {});
+    </script>
     <style>
       body {
         font-family:

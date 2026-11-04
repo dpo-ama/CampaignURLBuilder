@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.25/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.25",
+  "version": "1.0.0",
+  "id": "8446ba5a-0ecb-4fa7-8070-65243b3021f7",
+  "developer": {
+    "name": "dpo-ama",
+    "websiteUrl": "https://dpo-ama.github.io/CampaignURLBuilder/",
+    "privacyUrl": "https://dpo-ama.github.io/CampaignURLBuilder/teams/privacy.html",
+    "termsOfUseUrl": "https://dpo-ama.github.io/CampaignURLBuilder/teams/terms.html"
+  },
+  "name": {
+    "short": "Campaign URL Builder",
+    "full": "Campaign URL Builder"
+  },
+  "description": {
+    "short": "Build campaign URLs with tracking parameters.",
+    "full": "Create campaign URLs with UTM parameters and copy them for use in marketing campaigns."
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "accentColor": "#4F46E5",
+  "staticTabs": [
+    {
+      "entityId": "campaign-url-builder",
+      "name": "Campaign URL Builder",
+      "contentUrl": "https://dpo-ama.github.io/CampaignURLBuilder/",
+      "websiteUrl": "https://dpo-ama.github.io/CampaignURLBuilder/",
+      "scopes": ["personal"]
+    }
+  ],
+  "validDomains": ["dpo-ama.github.io"]
+}
