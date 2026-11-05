@@ -47,14 +47,14 @@
 }
 
 .form-section {
-  padding: 2rem 2.25rem;
+  padding: 1.1rem 1.5rem;
 }
 
 .section-number {
   display: grid;
-  flex: 0 0 2.4rem;
+  flex: 0 0 2rem;
   place-items: center;
-  height: 2.4rem;
+  height: 2rem;
   border-radius: 0.8rem;
   color: var(--accent);
   background: #eeedff;
@@ -65,11 +65,11 @@
 .field-row {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.9rem;
 }
 
 .field-label {
-  flex: 0 0 11rem;
+  flex: 0 0 9.5rem;
   color: #35405f;
   font-size: 0.875rem;
   font-weight: 600;
@@ -92,7 +92,7 @@
 }
 
 .field-control {
-  height: 2.8rem;
+  height: 2.4rem;
   padding: 0 0.9rem;
 }
 
@@ -118,7 +118,7 @@
 }
 
 .ppc-panel {
-  padding: 1.5rem;
+  padding: 1rem 1.1rem;
   border: 1px solid #dcd9fb;
   border-left: 4px solid #7165df;
   border-radius: 1rem;
@@ -126,7 +126,7 @@
 }
 
 .generated-row {
-  padding-top: 1.25rem;
+  padding-top: 0.8rem;
   border-top: 1px solid #deddf3;
 }
 
@@ -137,7 +137,7 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  height: 2.75rem;
+  height: 2.4rem;
   padding: 0 1.1rem;
   border-radius: 0.7rem;
   font-size: 0.875rem;
@@ -195,7 +195,7 @@
 }
 
 .result-textarea {
-  min-height: 6rem;
+  min-height: 4rem;
   padding: 0.85rem 1rem;
   line-height: 1.5;
   resize: vertical;
@@ -208,13 +208,13 @@
   }
 
   .form-section {
-    padding: 1.5rem 1.25rem;
+    padding: 1rem 1rem;
   }
 
   .field-row {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.5rem;
+    gap: 0.3rem;
   }
 
   .field-label {
