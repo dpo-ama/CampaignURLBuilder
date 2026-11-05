@@ -11,8 +11,8 @@
     <script type="module" src="./js/app.js"></script>
   </head>
   <body class="site-body">
-    <main class="mx-auto max-w-5xl px-4 py-5 sm:px-6 sm:py-8 lg:py-10">
-      <header class="hero relative isolate overflow-hidden rounded-3xl px-7 pb-12 pt-8 text-white sm:px-10 sm:pb-14 sm:pt-10">
+    <main class="mx-auto max-w-5xl px-4 py-3 sm:px-6 sm:py-5 lg:py-6">
+      <header class="hero relative isolate overflow-hidden rounded-3xl px-6 pb-9 pt-5 text-white sm:px-8 sm:pb-10 sm:pt-6">
         <div class="relative z-10 flex flex-wrap items-start gap-3 sm:flex-nowrap sm:gap-5">
           <div class="hero-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -21,9 +21,9 @@
             </svg>
           </div>
           <div class="min-w-0 basis-[calc(100%-4rem)] flex-1 sm:basis-auto">
-            <p class="mb-2 text-[0.7rem] font-bold uppercase tracking-[0.18em] text-teal-200">Marketing <span class="px-1.5 text-white/60" aria-hidden="true">/</span> Link builder</p>
+            <p class="mb-1 text-[0.7rem] font-bold uppercase tracking-[0.18em] text-teal-200">Marketing <span class="px-1.5 text-white/60" aria-hidden="true">/</span> Link builder</p>
             <h1 class="text-[clamp(1.85rem,4vw,2.6rem)] font-bold leading-tight tracking-tight">Campaign URL Builder</h1>
-            <p class="mt-3 max-w-xl text-sm leading-6 text-indigo-100 sm:text-base">Build a link that’s ready to share, with every campaign detail in its place.</p>
+            <p class="mt-1.5 max-w-xl text-sm leading-6 text-indigo-100 sm:text-base">Build a link that’s ready to share, with every campaign detail in its place.</p>
           </div>
           <button id="clearButton" type="button" class="reset-button ml-[3.8rem] sm:ml-0">Clear all</button>
         </div>
@@ -38,14 +38,14 @@
 
       <div class="relative mx-1 -mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-indigo-950/10 sm:mx-5 sm:-mt-5">
         <section aria-labelledby="destinationHeading" class="form-section">
-          <div class="mb-7 flex items-center gap-3.5">
+          <div class="mb-4 flex items-center gap-3">
             <span class="section-number" aria-hidden="true">01</span>
             <div>
               <h2 id="destinationHeading" class="text-lg font-bold text-indigo-950">Destination</h2>
               <p class="mt-1 text-sm text-slate-500">Choose where this campaign should lead.</p>
             </div>
           </div>
-          <div class="space-y-5">
+          <div class="space-y-3">
             <!-- Campaign purpose -->
             <div class="field-row">
               <label for="utmPurpose" class="field-label">Campaign purpose</label>
@@ -86,14 +86,14 @@
         </section>
 
         <section aria-labelledby="trackingHeading" class="form-section border-t border-slate-100">
-          <div class="mb-7 flex items-center gap-3.5">
+          <div class="mb-4 flex items-center gap-3">
             <span class="section-number" aria-hidden="true">02</span>
             <div>
               <h2 id="trackingHeading" class="text-lg font-bold text-indigo-950">Tracking details</h2>
               <p class="mt-1 text-sm text-slate-500">Add the values that identify this campaign.</p>
             </div>
           </div>
-          <div class="space-y-5">
+          <div class="space-y-3">
             <!-- Medium -->
             <div class="field-row">
               <label for="medium" class="field-label">Medium</label>
@@ -131,10 +131,10 @@
               class="ppc-panel"
               style="display: none"
             >
-              <h3 id="ppcHeading" class="mb-5 text-base font-semibold text-slate-900">
+              <h3 id="ppcHeading" class="mb-3 text-base font-semibold text-slate-900">
                 UTM Campaign Components
               </h3>
-              <div class="space-y-5">
+              <div class="space-y-3">
                 <!-- Business Unit -->
                 <div class="field-row">
                   <label for="businessUnit" class="field-label">Business Unit</label>
@@ -301,7 +301,7 @@
         </section>
 
         <section aria-labelledby="resultHeading" class="form-section border-t border-slate-200 bg-gradient-to-r from-teal-50 to-indigo-50">
-          <div class="mb-7 flex items-center gap-3.5">
+          <div class="mb-4 flex items-center gap-3">
             <span class="section-number bg-teal-100 text-teal-700" aria-hidden="true">03</span>
             <div>
               <h2 id="resultHeading" class="text-lg font-bold text-indigo-950">Your tracking URL</h2>
@@ -314,7 +314,7 @@
             <textarea
               id="finalURL"
               readonly
-              rows="3"
+              rows="2"
               class="result-textarea"
             ></textarea>
             <button
